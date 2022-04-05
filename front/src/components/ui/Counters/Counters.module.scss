@@ -1,0 +1,17 @@
+@import '../../../scss/_variables.scss';
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	> .count {
+		font-size: 24px;
+		text-align: center;
+		> .heading {
+			color: $purple;
+			text-transform: capitalize;
+		}
+		.number {
+			font-weight: bold;
+		}
+	}
+}
