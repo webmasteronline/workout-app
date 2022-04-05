@@ -1,0 +1,20 @@
+--back
+----config
+------db.js (подключение к БД)
+----controllers
+------exercise
+--------exerciseController.js
+------user
+--------authController.js
+--------profileController.js
+--------regController.js
+----helpers
+------generateToken.js
+----middleware
+------authMiddleware.js
+------errorMiddleware.js
+----models
+------workoutLogModel.js (страничкасо списком наших упражнений. каждое упражнение из списка по выполнению попадает сюда(отмечается) и когда выполнится последнее мы тут тоже отмечяем в верху тренеровка выполнена)
+----routes
+
+lesson 17
