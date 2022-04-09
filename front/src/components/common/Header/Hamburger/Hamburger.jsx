@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 import hamburgerImage from '../../../../images/header/hamburger.svg'
 import hamburgerCloseImage from '../../../../images/header/hamburger-close.svg'
 import styles from './Hamburger.module.scss'
-import { menu } from './manuBase'
+import { menu } from './menuBase'
 
 const Hamburger = () => {
 	const [show, setShow] = useState(false)
@@ -16,6 +17,7 @@ const Hamburger = () => {
 			<button type='button' onClick={() => setShow(!show)}>
 				<img src={show ? hamburgerCloseImage : hamburgerImage} alt='Auth' />
 			</button>
+
 			<nav className={`${styles.menu} ${show ? styles.show : ''}`}>
 				<ul>
 					{menu.map((item, idx) => (
