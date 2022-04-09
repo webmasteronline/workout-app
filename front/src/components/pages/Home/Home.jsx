@@ -8,7 +8,7 @@ import styles from './Home.module.scss'
 const Home = () => {
 	const navigate = useNavigate()
 	return (
-		<Layout height='100%' bgImage={bgImage}>
+		<Layout bgImage={bgImage}>
 			<Button
 				text='New'
 				callback={() => navigate('/new-workout')}
