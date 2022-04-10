@@ -1,0 +1,21 @@
+@import '../../../scss/variables';
+.wrapperButton {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	> div {
+		width: 48%;
+		> button {
+			width: 100%;
+		}
+		&:last-child > button {
+			background-color: #20366b;
+			opacity: 0.8;
+			transition: opacity 0.2s ease;
+			&:hover {
+				background-color: #20366b;
+				opacity: 1;
+			}
+		}
+	}
+}

@@ -6,7 +6,6 @@ import bgImage from '../../../images/new-workout-bg.jpg'
 import Field from '../../ui/Field/Field'
 import { useNavigate } from 'react-router'
 import Button from '../../ui/Button/Button'
-import styles from './NewWorkout.module.scss'
 import { Link } from 'react-router-dom'
 
 const NewWorkout = () => {
@@ -19,14 +18,14 @@ const NewWorkout = () => {
 	return (
 		<>
 			<Layout bgImage={bgImage} heading='Create new workout' />
-			<div className={styles.wrapper}>
+			<div className='wrapper-inner-page'>
 				<form onSubmit={handleSubmit}>
 					<Field
 						placeholder='Enter name'
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
-					<Link to='/mew-exercise' className='dark-link'>
+					<Link to='/new-exercise' className='dark-link'>
 						Add new exercise
 					</Link>
 					<ReactSelect

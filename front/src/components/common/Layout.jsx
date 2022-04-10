@@ -15,7 +15,6 @@ const Layout = ({ children, bgImage, heading = '' }) => {
 			{/* если есть heading то выполнится - <h1>{heading}</h1>*/}
 			{heading && <h1 className={styles.heading}>{heading}</h1>}
 			{children && <div>{children}</div>}
-			{console.log(children)}
 		</div>
 	)
 }
