@@ -10,12 +10,16 @@ import Alert from '../../ui/Alert/Alert'
 import { useMutation } from 'react-query'
 import { $api } from '../../../api/api'
 import Loader from '../../ui/Loader'
+import { useNavigate } from 'react-router'
+import { useAuth } from '../../../hooks/useAuth.js'
 
 const Auth = () => {
 	const [email, setEmail] = React.useState('')
 	const [password, setPassword] = React.useState('')
 	const [type, setType] = React.useState('auth')
 
+	const navigate = useNavigate()
+	const { setIsAuth } = useAuth()
 	const {
 		mutate: register,
 		isLoading,
@@ -32,12 +36,16 @@ const Auth = () => {
 			}),
 		{
 			onSuccess(data) {
-				console.log(
-					data
-				) /*в data - содержится наш ответ с сервера-   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU4MjBmYTgxMTZjM2NkYzYxOTA4ZjciLCJpYXQiOjE2NDk5NDI3NzgsImV4cCI6MTY1MDgwNjc3OH0.9CDXyYNa4am51I_tLUDHiVaCNRRvqsPX0sPBZIwP-fY"
+				//	console.log(data)
+				/*в data - содержится наш ответ с сервера-   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU4MjBmYTgxMTZjM2NkYzYxOTA4ZjciLCJpYXQiOjE2NDk5NDI3NzgsImV4cCI6MTY1MDgwNjc3OH0.9CDXyYNa4am51I_tLUDHiVaCNRRvqsPX0sPBZIwP-fY"
 user: {password: '$2a$10$2eXV2k/b.RWoQdw0QnPe0OQ688y9HDSPCbN2JarhXtAnUJ446MK0K', email: 'test123@test.ru', image: {…}, statistics: {…}, _id: '625820fa8116c3cdc61908f7', …}
 [[Prototype]]: Object */
 				localStorage.setItem('token', data.token)
+				setIsAuth(true)
+				setPassword('') //очищаем поля ввода
+				setEmail('')
+
+				navigate('/') // после успешной регистрации переходим на главную страницу.
 			},
 		}
 	)

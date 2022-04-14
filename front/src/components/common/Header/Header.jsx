@@ -4,12 +4,15 @@ import styles from './Header.module.scss'
 
 import userImage from '../../../images/header/user.svg'
 import arrowImage from '../../../images/header/arrow.svg'
+import authImage from '../../../images/header/dumbbell.svg'
 import { useLocation, useNavigate } from 'react-router'
+import { useAuth } from '../../../hooks/useAuth'
 
 const Header = ({ backCallback }) => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	//console.log(location.pathname) // выводит /new-workout
+	const { isAuth } = useAuth() //авторизован либо нет
 	return (
 		<header className={styles.header}>
 			{location.pathname !== '/' ? (
@@ -17,8 +20,11 @@ const Header = ({ backCallback }) => {
 					<img src={arrowImage} alt='Auth' />
 				</button>
 			) : (
-				<button type='button' onClick={() => navigate('/auth')}>
-					<img src={userImage} alt='Auth' />
+				<button
+					type='button'
+					onClick={() => navigate(isAuth ? '/profile' : '/auth')} //если авториз то '/profile' : иначе '/auth'
+				>
+					<img src={isAuth ? authImage : userImage} alt='Auth' height='40' />
 				</button>
 			)}
 
