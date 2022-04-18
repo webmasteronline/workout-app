@@ -20,11 +20,20 @@ const Auth = () => {
 
 	const navigate = useNavigate()
 	const { setIsAuth } = useAuth()
+
+	const successLogin = (token) => {
+		localStorage.setItem('token', token)
+		setIsAuth(true)
+		setPassword('') //очищаем поля ввода
+		setEmail('')
+
+		navigate('/') // после успешной регистрации переходим на главную страницу.
+	}
+
 	const {
 		mutate: register,
 		isLoading,
 		error,
-		data,
 	} = useMutation(
 		'Registration',
 		() =>
@@ -40,20 +49,36 @@ const Auth = () => {
 				/*в data - содержится наш ответ с сервера-   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjU4MjBmYTgxMTZjM2NkYzYxOTA4ZjciLCJpYXQiOjE2NDk5NDI3NzgsImV4cCI6MTY1MDgwNjc3OH0.9CDXyYNa4am51I_tLUDHiVaCNRRvqsPX0sPBZIwP-fY"
 user: {password: '$2a$10$2eXV2k/b.RWoQdw0QnPe0OQ688y9HDSPCbN2JarhXtAnUJ446MK0K', email: 'test123@test.ru', image: {…}, statistics: {…}, _id: '625820fa8116c3cdc61908f7', …}
 [[Prototype]]: Object */
-				localStorage.setItem('token', data.token)
-				setIsAuth(true)
-				setPassword('') //очищаем поля ввода
-				setEmail('')
+				successLogin(data.token)
+			},
+		}
+	)
 
-				navigate('/') // после успешной регистрации переходим на главную страницу.
+	const {
+		mutate: auth,
+		isLoading: isLoadingAuth,
+		error: errorAuth,
+	} = useMutation(
+		'Registration',
+		() =>
+			$api({
+				url: '/users/login',
+				type: 'POST',
+				body: { email, password },
+				auth: false,
+			}),
+		{
+			onSuccess(data) {
+				successLogin(data.token)
 			},
 		}
 	)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+
 		if (type === 'auth') {
-			console.log('Auth')
+			auth()
 		} else {
 			register()
 		}
@@ -64,7 +89,8 @@ user: {password: '$2a$10$2eXV2k/b.RWoQdw0QnPe0OQ688y9HDSPCbN2JarhXtAnUJ446MK0K',
 			<Layout bgImage={bgImage} heading='Auth || Registration' />
 			<div className='wrapper-inner-page'>
 				{error && <Alert type='warning' text={error} />}
-				{isLoading && <Loader />}
+				{errorAuth && <Alert type='error' text={errorAuth} />}
+				{(isLoading || isLoadingAuth) && <Loader />}
 				<form onSubmit={handleSubmit}>
 					<Field
 						placeholder='Enter email'

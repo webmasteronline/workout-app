@@ -1,0 +1,11 @@
+.images {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 0.8rem;
+	margin-bottom: 2.5rem;
+	> img {
+		margin: 0 0.7rem;
+		cursor: pointer;
+	}
+}

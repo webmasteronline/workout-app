@@ -12,7 +12,7 @@ const Header = ({ backCallback }) => {
 	const navigate = useNavigate()
 	const location = useLocation()
 	//console.log(location.pathname) // выводит /new-workout
-	const { isAuth } = useAuth() //авторизован либо нет
+	const { isAuth } = useAuth() //авторизован либо нет получаем это все из AuthContext
 	return (
 		<header className={styles.header}>
 			{location.pathname !== '/' ? (

@@ -1,20 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { CSSTransition } from 'react-transition-group'
 import hamburgerImage from '../../../../images/header/hamburger.svg'
 import hamburgerCloseImage from '../../../../images/header/hamburger-close.svg'
 import styles from './Hamburger.module.scss'
 import { menu } from './menuBase'
 import { useAuth } from '../../../../hooks/useAuth'
 import { useOutsideAlerter } from '../../../../hooks/useOutsideAlerter'
+
 const Hamburger = () => {
 	//const [show, setShow] = useState(false)
 	const { setIsAuth } = useAuth()
 	const { ref, isComponentVisible, setIsComponentVisible } =
 		useOutsideAlerter(false)
+
 	const handleLogout = () => {
 		localStorage.removeItem('token')
-		setIsAuth(true)
+		setIsAuth(false)
 		setIsComponentVisible(false)
 	}
 
@@ -28,6 +29,7 @@ const Hamburger = () => {
 					src={isComponentVisible ? hamburgerCloseImage : hamburgerImage}
 					alt='Auth'
 					height='24'
+					draggable={false}
 				/>
 			</button>
 
