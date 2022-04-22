@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import Layout from '../../common/Layout'
 import ReactSelect from 'react-select'
 
@@ -7,39 +7,88 @@ import Field from '../../ui/Field/Field'
 import { useNavigate } from 'react-router'
 import Button from '../../ui/Button/Button'
 import { Link } from 'react-router-dom'
+import { useMutation, useQuery } from 'react-query'
+import { $api } from '../../../api/api'
+import Loader from '../../ui/Loader'
+import Alert from '../../ui/Alert/Alert'
 
 const NewWorkout = () => {
-	const [name, setName] = React.useState('')
-	const [exercises, setExercises] = React.useState('')
-	const handleSubmit = () => {
-		console.log('submit')
-	}
+	const [name, setName] = useState('')
+	const [exercisesCurrent, setExercisesCurrent] = useState([])
+
 	const navigate = useNavigate()
+	const { data, isSuccess } = useQuery(
+		'list exercise',
+		() =>
+			$api({
+				url: '/exercises',
+				//type: 'POST', // type: 'GET' - стоит по умолчанию по-этому не указываем
+				//auth: true, //auth: true - стоит по умолчанию
+			}),
+		{
+			refetchOnWindowFocus: false,
+		}
+	)
+
+	const {
+		mutate,
+		isLoading,
+		isSuccess: isSuccessMutate,
+		error,
+	} = useMutation(
+		'Create new workout',
+		({ exIds }) =>
+			$api({
+				url: '/workouts',
+				type: 'POST',
+				body: { name, exerciseIds: exIds },
+			}),
+		{
+			onSuccess() {
+				setName('')
+				setExercisesCurrent([])
+			},
+		}
+	)
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		const exIds = exercisesCurrent.map((ex) => ex.value)
+		mutate({
+			exIds,
+		})
+	}
 	return (
 		<>
 			<Layout bgImage={bgImage} heading='Create new workout' />
 			<div className='wrapper-inner-page'>
+				{error && <Alert type='warning' text={error} />}
+				{isSuccessMutate && <Alert text='Workout created' />}
+				{isLoading && <Loader />}
 				<form onSubmit={handleSubmit}>
 					<Field
 						placeholder='Enter name'
 						value={name}
 						onChange={(e) => setName(e.target.value)}
+						required
 					/>
 					<Link to='/new-exercise' className='dark-link'>
 						Add new exercise
 					</Link>
-					<ReactSelect
-						classNamePrefix='select2-selection'
-						placeholder='Exercises...'
-						title='Exercises'
-						options={[
-							{ value: 'ewwrwrrw', label: 'Push-ups' },
-							{ value: 'ewwrrw', label: 'Push-ups' },
-						]}
-						value={exercises}
-						onChange={setExercises}
-						isMulti={true}
-					/>
+					{isSuccess && data && (
+						<ReactSelect
+							classNamePrefix='select2-selection'
+							placeholder='Exercises...'
+							title='Exercises'
+							options={data.map((ex) => ({
+								value: ex._id,
+								label: ex.name,
+							}))}
+							value={exercisesCurrent}
+							onChange={setExercisesCurrent}
+							isMulti={true}
+						/>
+					)}
 					<Button text='Create' callback={() => navigate('/new-workout')} />
 				</form>
 			</div>

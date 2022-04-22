@@ -19,15 +19,16 @@ const NewExercise = () => {
 	const [name, setName] = useState('')
 	const [times, setTimes] = useState(0)
 	const [imageName, setImageName] = useState('chest')
+	const [errorEmpty, setErrorEmpty] = useState(false)
 
 	const navigate = useNavigate()
-	let setError = false
+
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		if (name && times && imageName) {
 			mutate()
 		} else {
-			let setError = true
+			setErrorEmpty(true)
 		}
 	}
 
@@ -45,6 +46,7 @@ const NewExercise = () => {
 				setName('')
 				setTimes('')
 				setImageName('')
+				setErrorEmpty(false)
 			},
 		}
 	)
@@ -54,9 +56,7 @@ const NewExercise = () => {
 			<Layout bgImage={bgImage} heading='Create new exercise' />
 			<div className='wrapper-inner-page'>
 				{error && <Alert type='warning' text={error} />}
-				{setError && (
-					<Alert type='warning' text='Все поля должны быть заполнены' />
-				)}
+				{errorEmpty && <Alert type='warning' text='Заполните все поля' />}
 				{isSuccess && <Alert text='Exercise created' />}
 				{isLoading && <Loader />}
 				<form onSubmit={handleSubmit}>
