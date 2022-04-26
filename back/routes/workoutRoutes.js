@@ -4,6 +4,7 @@ import {
 	createNewWorkout,
 	deleteWorkout,
 	getWorkout,
+	getWorkouts,
 	updateWorkout,
 } from '../controllers/workout/workoutController.js'
 
@@ -13,6 +14,7 @@ const router = express.Router()
 
 router
 	.route('/')
+	.get(protect, getWorkouts)
 	.post(protect, createNewWorkout)
 	.put(protect, updateWorkout)
 	.delete(protect, deleteWorkout)

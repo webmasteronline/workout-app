@@ -80,6 +80,7 @@ const NewExercise = () => {
 									[styles.active]: imageName === name,
 								})}
 								onClick={() => setImageName(name)}
+								draggable={false}
 							/>
 						))}
 					</div>

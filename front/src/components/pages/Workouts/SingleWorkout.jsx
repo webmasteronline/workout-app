@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query'
 import Header from '../../common/Header/Header'
-import Counters from '../../ui/Counters/Counters'
 
 import bgImage from '../../../images/workout-bg.jpg'
 
@@ -56,6 +55,7 @@ const SingleWorkout = () => {
 												src={`/uploads/exercises/${ex.imageName}.svg`}
 												height='34'
 												alt=''
+												draggable={false}
 											/>
 										</Link>
 									</div>

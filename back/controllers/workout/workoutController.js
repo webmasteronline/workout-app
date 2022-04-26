@@ -16,7 +16,6 @@ export const createNewWorkout = asyncHandler(async (req, res) => {
 //@desc   GET workout
 //@route  GET /api/workouts/:id
 //@access Private
-
 export const getWorkout = asyncHandler(async (req, res) => {
 	/* получаем workout */
 	const workout = await Workout.findById(req.params.id)
@@ -26,6 +25,16 @@ export const getWorkout = asyncHandler(async (req, res) => {
 	/* отдаем workout */
 	const minutes = Math.ceil(workout.exercises.length * 3.7)
 	res.json({ ...workout, minutes })
+})
+
+//@desc   GET workouts
+//@route  GET /api/workouts
+//@access Private
+
+export const getWorkouts = asyncHandler(async (req, res) => {
+	const workouts = await Workout.find({}).populate('exercises')
+
+	res.json(workouts)
 })
 
 //@desc   Update workout

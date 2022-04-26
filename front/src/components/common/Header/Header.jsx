@@ -17,14 +17,19 @@ const Header = ({ backCallback }) => {
 		<header className={styles.header}>
 			{location.pathname !== '/' ? (
 				<button type='button' onClick={() => navigate(-1)}>
-					<img src={arrowImage} alt='Auth' />
+					<img src={arrowImage} alt='Auth' draggable={false} />
 				</button>
 			) : (
 				<button
 					type='button'
 					onClick={() => navigate(isAuth ? '/profile' : '/auth')} //если авториз то '/profile' : иначе '/auth'
 				>
-					<img src={isAuth ? authImage : userImage} alt='Auth' height='40' />
+					<img
+						src={isAuth ? authImage : userImage}
+						alt='Auth'
+						height='40'
+						draggable={false}
+					/>
 				</button>
 			)}
 
