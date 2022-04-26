@@ -4,7 +4,7 @@ const instance = axios.create({
 	baseURL: '/api',
 	headers: {
 		'Content-Type': 'application/json',
-		//Authorization: `Bearer ${token}`, //так было бы если бы мы брали токен но на данный момент не берем его
+		//Authorization: `Bearer ${token}`, //так было бы если бы мы брали токен но на данный момент не берем его- мы указали его на 14 строке ниже
 	},
 })
 
