@@ -1,41 +1,67 @@
-import { useQuery } from 'react-query'
 import Header from '../../common/Header/Header'
-
+import { Fragment, useEffect } from 'react'
 import bgImage from '../../../images/workout-bg.jpg'
+import { useMutation, useQuery } from 'react-query'
+import Alert from '../../ui/Alert/Alert'
+import { useNavigate } from 'react-router-dom'
+import cn from 'classnames'
 
 import styles from './SingleWorkout.module.scss'
 import stylesLayout from '../../common/Layout.module.scss'
 import { $api } from '../../../api/api'
-import { useParams } from 'react-router'
-import Alert from '../../ui/Alert/Alert'
-import { Link } from 'react-router-dom'
-import { Fragment } from 'react'
+import { useParams } from 'react-router-dom'
+import Loader from '../../ui/Loader'
 
 const SingleWorkout = () => {
-	const { id } =
-		useParams() /** получаем наш параметр id из адресной строки. для этого в dataRoutes указываем (path: '/workout/:id') */
-	const { data, isSuccess } = useQuery(
-		'get workout',
+	const { id } = useParams()
+	const navigate = useNavigate()
+
+	const { data, isSuccess, isLoading } = useQuery('get workout', () =>
+		$api({
+			url: `/workouts/log/${id}`,
+		})
+	)
+
+	const { mutate: setWorkoutCompleted, error: errorCompleted } = useMutation(
+		'Change log state',
 		() =>
 			$api({
-				url: `/workouts/${id}`,
+				url: '/workouts/log/completed',
+				type: 'PUT',
+				body: { logId: id },
 			}),
 		{
-			refetchOnWindowFocus: false,
+			onSuccess() {
+				navigate(`/workouts`)
+			},
 		}
 	)
+
+	useEffect(() => {
+		if (
+			isSuccess &&
+			data?.exerciseLogs &&
+			data.exerciseLogs.length ===
+				data.exerciseLogs.filter((log) => log.completed).length &&
+			data._id === id
+		) {
+			setWorkoutCompleted()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data?.exerciseLogs])
+
 	return (
 		<>
 			<div
 				className={`${stylesLayout.wrapper} ${stylesLayout.otherPage}`}
 				style={{ backgroundImage: `url(${bgImage})`, height: 356 }}
 			>
-				<Header />
+				<Header backLink='/workouts' />
 
 				{isSuccess && (
 					<div>
 						<time className={styles.time}>{data.minutes + ' min.'}</time>
-						<h1 className={stylesLayout.heading}>{data.name}</h1>
+						<h1 className={stylesLayout.heading}>{data.workout.name}</h1>
 					</div>
 				)}
 			</div>
@@ -43,28 +69,44 @@ const SingleWorkout = () => {
 				className='wrapper-inner-page'
 				style={{ paddingLeft: 0, paddingRight: 0 }}
 			>
-				{isSuccess ? (
+				<div style={{ width: '90%', margin: '0 auto' }}>
+					{errorCompleted && <Alert type='error' text={errorCompleted} />}
+				</div>
+				{isLoading || (isSuccess && data._id !== id) ? (
+					<Loader />
+				) : (
 					<div className={styles.wrapper}>
-						{data.exercises.map((ex, idx) => {
+						{data.exerciseLogs.map((exLog, idx) => {
 							return (
-								<Fragment key={`ex ${idx}`}>
-									<div className={styles.item}>
-										<Link to={`/exercises/${ex._id}`}>
-											<span>{ex.name}</span>
+								<Fragment key={`ex log ${idx}`}>
+									<div
+										className={cn(styles.item, {
+											[styles.completed]: exLog.completed,
+										})}
+									>
+										<button
+											aria-label='Move to exercise'
+											onClick={() => navigate(`/exercise/${exLog._id}`)}
+										>
+											<span>{exLog.exercise.name}</span>
 											<img
-												src={`/uploads/exercises/${ex.imageName}.svg`}
+												src={`/uploads/exercises/${exLog.exercise.imageName}.svg`}
 												height='34'
 												alt=''
 												draggable={false}
 											/>
-										</Link>
+										</button>
 									</div>
-									{idx % 2 !== 0 && <div className={styles.line}></div>}
+									{idx % 2 !== 0 && idx !== data.exerciseLogs.length - 1 && (
+										<div className={styles.line}></div>
+									)}
 								</Fragment>
 							)
 						})}
 					</div>
-				) : (
+				)}
+
+				{isSuccess && data?.length === 0 && (
 					<Alert type='warning' text='Exercises not found' />
 				)}
 			</div>

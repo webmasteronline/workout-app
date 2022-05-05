@@ -8,7 +8,11 @@ import Exercise from '../../models/exerciseModel.js'
 export const createNewExercise = asyncHandler(async (req, res) => {
 	const { name, times, imageName } = req.body
 
-	const exercise = await Exercise.create({ name, times, imageName })
+	const exercise = await Exercise.create({
+		name,
+		times,
+		imageName,
+	})
 
 	res.json(exercise)
 })
@@ -36,16 +40,6 @@ export const updateExercise = asyncHandler(async (req, res) => {
 	res.json(updatedExercise)
 })
 
-//@desc   GET exercises
-//@route  GET /api/exercises
-//@access Private
-
-export const getExercises = asyncHandler(async (req, res) => {
-	const exercises = await Exercise.find({})
-
-	res.json(exercises)
-})
-
 //@desc   Delete exercise
 //@route  PUT /api/exercises
 //@access Private
@@ -57,10 +51,20 @@ export const deleteExercise = asyncHandler(async (req, res) => {
 
 	if (!exercise) {
 		res.status(404)
-		throw new Error('Данноу упражнение не найдено!')
+		throw new Error('Данное упражнение не найдено!')
 	}
 
 	await exercise.remove()
 
-	res.json({ message: 'Упражнение удалено' })
+	res.json({ message: 'Exercise has been removed' })
+})
+
+//@desc   GET exercises
+//@route  GET /api/exercises
+//@access Private
+
+export const getExercises = asyncHandler(async (req, res) => {
+	const exercises = await Exercise.find({})
+
+	res.json(exercises)
 })

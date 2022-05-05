@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const { ObjectId } = mongoose.Schema
 
-const workoutLogScheme = mongoose.Schema(
+const workoutLogSchema = mongoose.Schema(
 	{
 		user: {
 			type: ObjectId,
@@ -10,11 +10,20 @@ const workoutLogScheme = mongoose.Schema(
 			required: true,
 		},
 		workout: { type: ObjectId, ref: 'Workout', required: true },
-		completed: { type: Boolean, default: true },
+		completed: { type: Boolean, default: false },
+		exerciseLogs: [
+			{
+				type: ObjectId,
+				ref: 'ExerciseLog',
+			},
+		],
 	},
-	{ minimize: false, timestamps: true }
+	{
+		minimize: false,
+		timestamps: true,
+	}
 )
 
-const WorkoutLog = mongoose.model('WorkoutLog', workoutLogScheme)
+const WorkoutLog = mongoose.model('WorkoutLog', workoutLogSchema)
 
 export default WorkoutLog
