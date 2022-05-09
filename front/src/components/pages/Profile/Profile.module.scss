@@ -4,6 +4,10 @@
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
+	@media (max-width: $mobile) {
+		width: 90%;
+		margin: 0 auto;
+	}
 	> div {
 		width: 48%;
 	}

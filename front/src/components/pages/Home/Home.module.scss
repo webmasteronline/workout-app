@@ -5,4 +5,7 @@
 	font-size: 32px;
 	color: $white;
 	line-height: 1.5;
+	@media (max-width: $mobile) {
+		font-size: 26px;
+	}
 }

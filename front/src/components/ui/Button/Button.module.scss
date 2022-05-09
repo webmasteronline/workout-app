@@ -16,6 +16,10 @@ $accent-07: rgba($accent, 0.7);
 	cursor: pointer;
 	color: #fff;
 	transition: background-color 0.15s ease;
+	@media (max-width: $mobile) {
+		font-size: 16px;
+		padding: 13px 38px;
+	}
 	&:hover {
 		background-color: $accent-07;
 	}
