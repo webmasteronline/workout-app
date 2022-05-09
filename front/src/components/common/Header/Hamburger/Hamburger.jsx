@@ -29,6 +29,7 @@ const Hamburger = () => {
 					src={isComponentVisible ? hamburgerCloseImage : hamburgerImage}
 					alt='Auth'
 					height='24'
+					width='27'
 					draggable={false}
 				/>
 			</button>

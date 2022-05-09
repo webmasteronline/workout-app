@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from 'react-query'
+import { Helmet } from 'react-helmet'
 
 import Loader from '../../ui/Loader'
 import { $api } from '../../../api/api'
@@ -45,6 +46,9 @@ const ListWorkouts = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>Workout List</title>
+			</Helmet>
 			<Layout bgImage={bgImage} heading='Workout list' />
 			<div
 				className='wrapper-inner-page'

@@ -1,4 +1,5 @@
 import Header from '../../common/Header/Header'
+import { Helmet } from 'react-helmet'
 import { Fragment, useEffect } from 'react'
 import bgImage from '../../../images/workout-bg.jpg'
 import { useMutation, useQuery } from 'react-query'
@@ -52,6 +53,9 @@ const SingleWorkout = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>Workout</title>
+			</Helmet>
 			<div
 				className={`${stylesLayout.wrapper} ${stylesLayout.otherPage}`}
 				style={{ backgroundImage: `url(${bgImage})`, height: 356 }}
