@@ -11,4 +11,8 @@ export const menu = [
 		title: 'Profile',
 		link: '/profile',
 	},
+	{
+		title: 'Del-Exercise',
+		link: '/dell-exercise',
+	},
 ]

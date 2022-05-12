@@ -41,7 +41,7 @@ export const updateExercise = asyncHandler(async (req, res) => {
 })
 
 //@desc   Delete exercise
-//@route  PUT /api/exercises
+//@route  DELETE /api/exercises
 //@access Private
 
 export const deleteExercise = asyncHandler(async (req, res) => {
@@ -51,7 +51,7 @@ export const deleteExercise = asyncHandler(async (req, res) => {
 
 	if (!exercise) {
 		res.status(404)
-		throw new Error('Данное упражнение не найдено!')
+		throw new Error(`Данное упражнение не найдено!${exerciseId}`)
 	}
 
 	await exercise.remove()

@@ -7,6 +7,7 @@ import Profile from './components/pages/Profile/Profile'
 import ListWorkouts from './components/pages/Workouts/ListWorkouts'
 import SingleWorkout from './components/pages/Workouts/SingleWorkout'
 import SingleExercise from './components/pages/Exercises/SingleExercise'
+import ListExercises from './components/pages/DellExercise/ListExercises'
 
 export const routes = [
 	{
@@ -47,6 +48,11 @@ export const routes = [
 	{
 		path: '/exercise/:id',
 		component: SingleExercise,
+		auth: true,
+	},
+	{
+		path: '/dell-exercise',
+		component: ListExercises,
 		auth: true,
 	},
 	{
