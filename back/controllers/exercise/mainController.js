@@ -45,13 +45,13 @@ export const updateExercise = asyncHandler(async (req, res) => {
 //@access Private
 
 export const deleteExercise = asyncHandler(async (req, res) => {
-	const { exerciseId } = req.body
 
-	const exercise = await Exercise.findById(exerciseId)
+
+	const exercise = await Exercise.findById(req.params.id)
 
 	if (!exercise) {
 		res.status(404)
-		throw new Error(`Данное упражнение не найдено!${exerciseId}`)
+		throw new Error('Данное упражнение не найдено!')
 	}
 
 	await exercise.remove()

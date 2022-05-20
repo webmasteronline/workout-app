@@ -51,7 +51,7 @@ export const routes = [
 		auth: true,
 	},
 	{
-		path: '/dell-exercise',
+		path: '/dell-exercise/',
 		component: ListExercises,
 		auth: true,
 	},

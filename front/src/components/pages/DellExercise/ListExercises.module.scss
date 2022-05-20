@@ -11,29 +11,37 @@
 		margin-bottom: 30px;
 		background-color: $purple;
 		color: $white;
-		padding: 14px 20px;
+		padding: 7px 20px;
 		width: 90%;
 		border-radius: 10px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		> button {
-			font-size: 15px;
-			color: $white;
-			text-decoration: none;
+		> div {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
-			background-color: transparent;
-			border: none;
-			cursor: pointer;
-			text-transform: uppercase;
-			transition: opacity 0.2s ease;
-			&:hover {
-				opacity: 0.5;
-			}
-			@media (max-width: $mobile) {
-				font-size: 18px;
+			justify-content: center;
+			> button {
+				font-size: 15px;
+				color: $white;
+				text-decoration: none;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				background-color: transparent;
+				border: none;
+				cursor: pointer;
+				text-transform: uppercase;
+				transition: background-color 0.2s ease-in;
+				border-radius: 10px;
+				padding: 7px;
+				&:hover {
+					background-color: darken($purple, 10%);
+				}
+
+				@media (max-width: $mobile) {
+					font-size: 18px;
+				}
 			}
 		}
 		> a {

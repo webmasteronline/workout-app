@@ -54,6 +54,7 @@ const NewWorkout = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		const exIds = exercisesCurrent.map((ex) => ex.value)
+		console.log({exerciseIds: exIds})
 		mutate({
 			exIds,
 		})

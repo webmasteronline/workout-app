@@ -3,7 +3,6 @@ import Layout from '../../common/Layout'
 import cn from 'classnames'
 
 import Field from '../../ui/Field/Field'
-import { useNavigate } from 'react-router'
 import Button from '../../ui/Button/Button'
 
 import bgImage from '../../../images/new-exercise-bg.jpg'
@@ -20,8 +19,6 @@ const NewExercise = () => {
 	const [times, setTimes] = useState(0)
 	const [imageName, setImageName] = useState('chest')
 	const [errorEmpty, setErrorEmpty] = useState(false)
-
-	const navigate = useNavigate()
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -50,6 +47,7 @@ const NewExercise = () => {
 			},
 		}
 	)
+	console.log(times)
 
 	return (
 		<>
