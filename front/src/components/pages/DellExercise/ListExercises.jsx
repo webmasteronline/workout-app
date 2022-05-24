@@ -30,7 +30,7 @@ const ListExercises = () => {
 		isLoading,
 		error,
 	} = useMutation(
-		'delete exercise',
+		'Delete exercise',
 		(exerciseId) =>
 			$api({
 				url: `/exercises/${exerciseId}`,
@@ -42,6 +42,7 @@ const ListExercises = () => {
 			},
 		}
 	)
+
 
 	return (
 		<>
@@ -74,8 +75,8 @@ const ListExercises = () => {
 										Dell
 									</button>
 									<button
-										aria-label='Delete exercise'
-										onClick={() => mutate(exercise._id)}
+										aria-label='Edit exercise'
+										onClick={() => navigate(`/edit-exercise/${exercise._id}`)}
 									>
 										Edit
 									</button>

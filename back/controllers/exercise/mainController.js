@@ -41,12 +41,10 @@ export const updateExercise = asyncHandler(async (req, res) => {
 })
 
 //@desc   Delete exercise
-//@route  DELETE /api/exercises
+//@route  DELETE /api/exercises/:id
 //@access Private
 
 export const deleteExercise = asyncHandler(async (req, res) => {
-
-
 	const exercise = await Exercise.findById(req.params.id)
 
 	if (!exercise) {
