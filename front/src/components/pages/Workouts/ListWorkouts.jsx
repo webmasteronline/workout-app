@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 const ListWorkouts = () => {
 	const navigate = useNavigate()
 
-	const { data, isSuccess } = useQuery(
+	const { data, isSuccess, refetch } = useQuery(
 		'get workouts',
 		() =>
 			$api({
@@ -40,6 +40,25 @@ const ListWorkouts = () => {
 		{
 			onSuccess(data) {
 				navigate(`/workout/${data._id}`)
+			},
+		}
+	)
+
+	const {
+		mutate: dellWorkout,
+		isLoading: isDelWorkout,
+		isSuccess: isSuccessDellWorkout,
+		error: errorDelWorkout,
+	} = useMutation(
+		'Dell workout',
+		(workoutId) =>
+			$api({
+				url: `/workouts/${workoutId}`,
+				type: 'DELETE',
+			}),
+		{
+			onSuccess() {
+				refetch()
 			},
 		}
 	)
@@ -71,6 +90,20 @@ const ListWorkouts = () => {
 								>
 									<span>{workout.name}</span>
 								</button>
+								<div>
+									<button
+										aria-label='Delete exercise'
+										onClick={() => dellWorkout(workout._id)}
+									>
+										Dell
+									</button>
+									<button
+										aria-label='Edit exercise'
+										// onClick={() => navigate(`/edit-exercise/${exercise._id}`)}
+									>
+										Edit
+									</button>
+								</div>
 							</div>
 						))}
 					</div>

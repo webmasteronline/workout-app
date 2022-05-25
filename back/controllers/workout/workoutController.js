@@ -62,11 +62,11 @@ export const updateWorkout = asyncHandler(async (req, res) => {
 })
 
 //@desc   Delete workout
-//@route  PUT /api/workouts
+//@route  PUT /api/workouts/:id
 //@access Private
 
 export const deleteWorkout = asyncHandler(async (req, res) => {
-	const { workoutId } = req.body
+	const workoutId = req.params.id
 
 	const workout = await Workout.findById(workoutId)
 
