@@ -99,7 +99,7 @@ const ListWorkouts = () => {
 									</button>
 									<button
 										aria-label='Edit exercise'
-										// onClick={() => navigate(`/edit-exercise/${exercise._id}`)}
+										 onClick={() => navigate(`/edit-workout/${workout._id}`)}
 									>
 										Edit
 									</button>

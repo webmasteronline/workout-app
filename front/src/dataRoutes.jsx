@@ -9,6 +9,7 @@ import SingleWorkout from './components/pages/Workouts/SingleWorkout'
 import SingleExercise from './components/pages/Exercises/SingleExercise'
 import ListExercises from './components/pages/DellExercise/ListExercises'
 import EditExercise from './components/pages/EditExercise/EditExercise'
+import EditWorkout from './components/pages/EditWorkout/EditWorkout'
 
 export const routes = [
 	{
@@ -59,6 +60,11 @@ export const routes = [
 	{
 		path: '/edit-exercise/:id',
 		component: EditExercise,
+		auth: true,
+	},
+	{
+		path: '/edit-workout/:id',
+		component: EditWorkout,
 		auth: true,
 	},
 	{

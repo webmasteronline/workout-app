@@ -36,7 +36,7 @@ export const createNewWorkoutLog = asyncHandler(async (req, res) => {
 				workoutLog: workoutLog._id,
 			}
 		})
-
+console.log(logs)
 		const createdExLogs = await ExerciseLog.insertMany(logs)
 
 		const exLogIds = createdExLogs.map((log) => log._id)
