@@ -46,9 +46,9 @@ const ListWorkouts = () => {
 
 	const {
 		mutate: dellWorkout,
-		isLoading: isDelWorkout,
-		isSuccess: isSuccessDellWorkout,
-		error: errorDelWorkout,
+		// isLoading: isDelWorkout,
+		// isSuccess: isSuccessDellWorkout,
+		// error: errorDelWorkout,
 	} = useMutation(
 		'Dell workout',
 		(workoutId) =>

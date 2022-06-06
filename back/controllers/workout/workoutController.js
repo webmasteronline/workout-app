@@ -26,7 +26,11 @@ export const getWorkout = asyncHandler(async (req, res) => {
 
 	/* отдаем workout */
 	const minutes = Math.ceil(workout.exercises.length * 3.7)
-	res.json({ ...workout, minutes })
+		const exerciseItem = workout.exercises.map((ex) => ({
+		value: ex._id,
+		label: ex.name,
+	}))
+	res.json({ ...workout, minutes, exerciseItem })
 })
 
 //@desc   GET workouts

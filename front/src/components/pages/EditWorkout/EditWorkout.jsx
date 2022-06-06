@@ -15,14 +15,19 @@ import { Helmet } from 'react-helmet'
 
 const EditWorkout = () => {
 	const { id } = useParams()
-	const { data: dataWorkout, isSuccess } = useQuery(
+
+	const {
+		data: dataWorkout,
+		isSuccess,
+		refetch,
+	} = useQuery(
 		'workout',
 		() =>
 			$api({
-				url: `/workouts`,
+				url: `/workouts/${id}`,
 			}),
 		{
-			refetchOnWindowFocus: false,
+			refetchOnWindowFocus: true,
 		}
 	)
 
@@ -33,28 +38,23 @@ const EditWorkout = () => {
 				url: '/exercises',
 			}),
 		{
-			refetchOnWindowFocus: false,
+			refetchOnWindowFocus: true,
 		}
 	)
 
-	const workout = dataWorkout.find((item) => item._id === id)
-	const exercises = workout.exercises.map((ex) => ({
-		value: ex._id,
-		label: ex.name,
-	}))
+	//const workout = dataWorkout.find((item) => item._id === id)
+	// const exercises = workout.exercises.map((ex) => ({
+	// 	value: ex._id,
+	// 	label: ex.name,
+	// }))
 
-	console.log(id)
-	console.log('dataExercises:', dataExercises)
-	console.log('dataWorkout:', dataWorkout)
-	console.log('exercises:', exercises)
+	//	console.log(id)
+	// console.log('dataExercises:', dataExercises)
+	// console.log('dataWorkout:', dataWorkout)
+	//console.log('exercises:', exercises)
 	//	console.log(dataWorkout)
 	//console.log(workout.name)
 	//	console.log(workout.exercises)
-
-	const [name, setName] = useState(workout.name)
-	const [exercisesCurrent, setExercisesCurrent] = useState(exercises)
-
-	const navigate = useNavigate()
 
 	const {
 		mutate,
@@ -71,12 +71,24 @@ const EditWorkout = () => {
 			}),
 		{
 			onSuccess() {
+				setName(dataWorkout.name)
+				setExercisesCurrent(dataWorkout.exerciseItem)
+				refetch()
 				navigate(`/workouts`)
-				setName('')
-				setExercisesCurrent(exercises)
 			},
 		}
 	)
+	// useEffect(() => {
+	// 	setName('')
+	// 	setExercisesCurrent([])
+	// }, [])
+	const [name, setName] = useState(isSuccess ? dataWorkout.name : '')
+	const [exercisesCurrent, setExercisesCurrent] = useState(
+		isSuccess ? dataWorkout.exerciseItem : []
+	)
+
+	//console.log('exercisesCurrent', exercisesCurrent)
+	const navigate = useNavigate()
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -86,6 +98,7 @@ const EditWorkout = () => {
 			exIds,
 		})
 	}
+
 	return (
 		<>
 			<Helmet>
@@ -115,6 +128,7 @@ const EditWorkout = () => {
 								value: ex._id,
 								label: ex.name,
 							}))}
+							//defaultValue={exercisesCurrent}
 							value={exercisesCurrent}
 							onChange={setExercisesCurrent} //причина здесь
 							isMulti={true}
